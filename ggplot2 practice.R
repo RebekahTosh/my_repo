@@ -34,4 +34,39 @@ ggplot(data = se) +
   theme_dark() +
   theme(legend.title = element_blank(),
         axis.text.x = element_text(angle = 45, hjust = 1, size = 8))
+
+ggplot (data = se) +
+  geom_point (aes(x=year, y=visitors, color = park_name)) +
+  facet_wrap (~ state, scales = "free")
+
+ggplot (data = se) +
+  geom_jitter (aes(x=year, y=visitors, color = park_name),
+               width = 0.1,
+               aplha = 0.4) +
+  coord_flip() +
+  theme(legend.position = "none")
+
+ggplot(se, aes(x=park_name, y=visitors)) +
+  geom_boxplot() +
+  theme(axis.text.x = element_text(angle=45, hjust = 1))
+
+ggplot(se, aes(x=year, y=visitors, color = park_name)) +
+  geom_line()
+
+ggplot(data = acadia, aes(x=year, y=visitors)) +
+  geom_point() +
+  geom_line() +
+  geom_smooth(color = "blue", linetype = 2) +
+  labs(title = "Acadia National Park Visitation", 
+       y = "Visitation",
+       x = "Year") +
+  theme_bw()
+
+ggplot(data = visit_16, aes(x=state, y=visitors, fill= park_name)) +
+  geom_bar(stat = "identity", position = "dodge")
+
+  my_plot <- ggplot(data = mass) + 
+    geom_bar (aes(x=type, fill=park_name)) +
+    theme(axis.text.x =element_text(angle=90, hjust = 1, size = 10))
   
+  ggsave("name_of_file.png", my_plot, width = 15, height = 10)
