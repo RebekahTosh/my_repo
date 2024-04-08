@@ -70,3 +70,18 @@ ggplot(data = visit_16, aes(x=state, y=visitors, fill= park_name)) +
     theme(axis.text.x =element_text(angle=90, hjust = 1, size = 10))
   
   ggsave("name_of_file.png", my_plot, width = 15, height = 10)
+  
+  install.packages("plotly")
+  library (plotly)
+  
+  ggplotly(my_plot)
+  acad_vis <- ggplot(data = acadia, aes(x=year, y=visitors)) +
+    geom_point() +
+    geom_line () +
+    geom_smooth (color = "red") +
+    labs(title = "Acadia National Park Visitation",
+         y = "Visitation",
+         x = "Year") +
+    theme_bw()
+  ggplotly(acad_vis)
+  

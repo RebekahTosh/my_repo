@@ -1,0 +1,77 @@
+---
+title: "gampminder_wrangle"
+output: html_document
+date: "2024-04-04"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# wrangling gapminder data using dplyr
+
+library(tidyverse)
+library(skimr)
+
+
+gapminder <- read_csv('https://raw.githubusercontent.com/OHI-Science/data-science-training/master/data/gapminder.csv')
+
+head(gapminder)
+tail(gapminder,12)
+str(gapminder)
+
+names(gapminder)
+dim(gapminder)
+ncol(gapminder)
+nrow(gapminder)
+
+summary(gapminder)
+skim(gapminder)
+
+gapminder$lifeExp
+head(gapminder$lifeExp)
+str(gapminder$lifeExp)
+summary(gapminder$lifeExp)
+
+filter(gapminder, lifeExp <29)
+filter(gapminder, country %in% c("Mexico", "Peru"))
+filter(gapminder, country == "Mexico", year == 2002)
+Brazil_life_exp <- filter(gapminder, country == "Brazil", between(year, 1987, 2007))
+mean(Brazil_life_exp$lifeExp)
+
+x <- filter(gapminder, country == "Brazil", year > 1986)
+mean(x$lifeExp)
+
+select(gapminder, year, country, lifeExp)
+select(gapminder, -continent, -lifeExp)
+
+filter(gapminder, lifeExp < 29)
+
+gapminder %>% mutate(gdp = pop * gdpPercap)
+
+gapminder %>% 
+filter(continent == "Asia", year == "2007") %>% 
+mutate(pop_thousands = pop/1000) %>% 
+select(country, year, pop_thousands)
+
+gapminder %>% 
+filter(year == 2002) %>% 
+group_by(continent) %>% 
+mutate(cont_pop = sum(pop))
+
+gapminder %>% 
+group_by(continent) %>% 
+summarize(cont_pop = sum(pop)) %>% 
+ungroup()
+
+gapminder %>% 
+group_by(continent, year) %>% 
+summarize(cont_pop = sum(pop)) %>% 
+arrange(year)
+
+gapminder %>% 
+mutate(gdp = pop*gdpPercap) %>%
+group_by(continent) %>% 
+summarize(max_gdp = max(gdp))
+
+
